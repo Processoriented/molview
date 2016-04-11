@@ -1,0 +1,23 @@
+name:         molview_web
+version:      0.0.0
+author:       Herman Bergwerf <hermanbergwerf@gmail.com>
+description:  Web distribution of MolView.
+homepage:     http://molview.org
+environment:
+  sdk:        '>=1.8.0 <2.0.0'
+dependencies:
+  http:              ^0.11.3+3
+  browser:           ^0.10.0+2
+  polymer:           ^1.0.0-rc.16
+  polymer_elements:  ^1.0.0-rc.8
+  web_components:    ^0.12.3
+  omnibus:           ^0.14.0
+  molview_pubchem:   ^0.1.0
+  dart_to_js_script_rewriter:  ^1.0.1
+transformers:
+- polymer:
+    entry_points:
+    - web/index.html
+- $dart2js:
+    $include: '**/*.bootstrap.initialize.dart'
+- dart_to_js_script_rewriter

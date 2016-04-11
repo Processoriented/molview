@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>MolView!</title>
+    <script src="packages/web_components/webcomponents-lite.min.js"></script>
+    <script src="packages/web_components/dart_support.js"></script>
+
+    <style is="custom-style">
+      paper-tabs {
+        --paper-tabs-selection-bar-color: #fff;
+      }
+
+      paper-toolbar, paper-tabs {
+        background: #f50;
+      }
+    </style>
+  </head>
+  <body unresolved class="fullbleed">
+    <paper-toolbar>
+      <div class="title">MolView</div>
+      <paper-icon-button icon="more-vert" on-tap="moreAction"></paper-icon-button>
+    </paper-toolbar>
+    <paper-tabs selected="0" scrollable>
+      <paper-tab>TAB 1</paper-tab>
+      <paper-tab>TAB 2</paper-tab>
+      <paper-tab>TAB 3</paper-tab>
+    </paper-tabs>
+
+    <script type="application/dart" src="index.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>
