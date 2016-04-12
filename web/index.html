@@ -3,31 +3,82 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
     <title>MolView!</title>
     <script src="packages/web_components/webcomponents-lite.min.js"></script>
     <script src="packages/web_components/dart_support.js"></script>
-
     <style is="custom-style">
-      paper-tabs {
-        --paper-tabs-selection-bar-color: #fff;
+      :root {
+        --molview-white: #fff;
       }
 
-      paper-toolbar, paper-tabs {
-        background: #f50;
+      body {
+        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      }
+
+      paper-menu {
+        --paper-menu-color: var(--paper-grey-800);
+      }
+
+      paper-toolbar {
+        background-color: var(--paper-red-500);
       }
     </style>
   </head>
   <body unresolved class="fullbleed">
-    <paper-toolbar>
-      <div class="title">MolView</div>
-      <paper-icon-button icon="more-vert" on-tap="moreAction"></paper-icon-button>
-    </paper-toolbar>
-    <paper-tabs selected="0" scrollable>
-      <paper-tab>TAB 1</paper-tab>
-      <paper-tab>TAB 2</paper-tab>
-      <paper-tab>TAB 3</paper-tab>
-    </paper-tabs>
-
+    <!-- Main menu -->
+    <paper-drawer-panel force-narrow>
+      <paper-header-panel drawer>
+        <paper-toolbar>
+          <span class="title">Menu</span>
+        </paper-toolbar>
+        <paper-menu>
+          <paper-icon-item>
+            <iron-icon icon="save" item-icon></iron-icon>
+            Save
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="file-download" item-icon></iron-icon>
+            Load
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="file-upload" item-icon></iron-icon>
+            Export
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="feedback" item-icon></iron-icon>
+            Feedback
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="language" item-icon></iron-icon>
+            Language
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="apps" item-icon></iron-icon>
+            Modules
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="help" item-icon></iron-icon>
+            Tutorials
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="info" item-icon></iron-icon>
+            About
+          </paper-icon-item>
+        </paper-menu>
+      </paper-header-panel>
+      <paper-header-panel main>
+        <molview-toolbar logo="images/logo.svg" class="paper-header">
+          <paper-icon-button
+              class="molview-drawer-toggle"
+              icon="menu"
+              paper-drawer-toggle></paper-icon-button>
+          <paper-icon-button
+              class="molview-help-button"
+              icon="help-outline"></paper-icon-button>
+        </molview-toolbar>
+      </paper-header-panel>
+    </paper-drawer-panel>
     <script type="application/dart" src="index.dart"></script>
     <script src="packages/browser/dart.js"></script>
   </body>

@@ -1,0 +1,70 @@
+<dom-module id="molview-toolbar">
+  <template>
+    <style>
+      :host {
+        display: block;
+        position: relative;
+        height: calc(64px + 48px);
+
+        color: var(--molview-white);
+        background-color: var(--paper-red-500);
+      }
+
+      paper-tabs {
+        color: var(--molview-white);
+        background-color: var(--paper-red-500);
+        --paper-tabs-selection-bar-color: var(--molview-white);
+      }
+
+      paper-tab {
+        color: var(--paper-red-200);
+        text-transform: uppercase;
+
+        /* Fix small width changes when the tab is selected */
+        font-weight: bold;
+      }
+
+      paper-tab.iron-selected {
+        color: var(--molview-white);
+      }
+
+      #toolbar {
+        padding: 0 16px;
+        height: 64px;
+        align-items: center;
+      }
+
+      #molview-toolbar-logo {
+        width: 110px;
+        height: 20px;
+        margin: 8px 13px;
+      }
+
+      #searchbar {
+        flex: 1;
+      }
+    </style>
+
+    <!-- Fist bar -->
+    <div id="toolbar" class="layout horizontal">
+      <!-- Drawer menu toggle -->
+      <content select=".molview-drawer-toggle"></content>
+      <!-- MolView brand -->
+      <iron-image
+          id="molview-toolbar-logo"
+          src="[[logo]]"
+          sizing="contain"></iron-image>
+      <!-- Search bar wrapper -->
+      <div id="searchbar">
+      </div>
+      <!-- Quick help button -->
+      <content select=".molview-help-button"></content>
+    </div>
+    <!-- Scopes tabs -->
+    <paper-tabs selected="0" scrollable noInk>
+      <paper-tab>Molecular structure</paper-tab>
+      <paper-tab>Spectroscopy</paper-tab>
+      <paper-tab>Empirical data</paper-tab>
+    </paper-tabs>
+  </template>
+</dom-module>
