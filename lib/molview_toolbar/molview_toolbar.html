@@ -75,6 +75,10 @@
         color: var(--molview-white);
         background-color: var(--paper-red-a100);
         border-radius: 3px;
+
+        /* Fix for ripple overflow at border-radius during transition */
+        -webkit-backface-visibility: hidden;
+        -webkit-transform: translate3d(0, 0, 0);
       }
 
       #search.focussed {
