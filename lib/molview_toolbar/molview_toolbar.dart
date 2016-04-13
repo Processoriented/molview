@@ -5,8 +5,6 @@
 @HtmlImport('molview_toolbar.html')
 library molview_web.molview_toolbar;
 
-import 'dart:html';
-
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
 
@@ -23,35 +21,9 @@ import 'package:polymer_elements/paper_icon_button.dart';
 // ignore: UNUSED_IMPORT
 import 'package:polymer_elements/paper_tabs.dart';
 // ignore: UNUSED_IMPORT
-import 'package:polymer_elements/paper_material.dart';
+import 'package:molview_web/molview_search_input/molview_search_input.dart';
 
-/// TODO: fix #search-input blur when clicking inside the #search div.
 @PolymerRegister('molview-toolbar')
 class MolViewToolbar extends PolymerElement {
   MolViewToolbar.created() : super.created();
-
-  /// Store if the search bar is focussed.
-  bool _searchFocus = false;
-
-  @Listen('search.tap')
-  void onSearchTap(Event event, Map detail) {
-    if (!_searchFocus) {
-      $$("#search-input").focus();
-      _searchFocus = true;
-    }
-  }
-
-  @Listen('search-input.focus')
-  void onSearchInputFocus(Event event, Map detail) {
-    $$("#search").classes.add('focussed');
-    $$("#search-ripple").classes.add('down');
-    _searchFocus = true;
-  }
-
-  @Listen('search-input.blur')
-  void onSearchInputBlur(Event event, Map detail) {
-    $$("#search").classes.remove('focussed');
-    $$("#search-ripple").classes.remove('down');
-    _searchFocus = false;
-  }
 }

@@ -1,0 +1,103 @@
+<dom-module id="molview-search-input">
+  <template>
+    <style>
+      paper-input {
+        --paper-input-container-color: var(--paper-red-a100);
+        --paper-input-container-focus-color: #000;
+      }
+
+      iron-icon {
+        pointer-events: none;
+      }
+
+      #bar {
+        position: relative;
+        max-width: 500px;
+        height: 38px;
+        padding: 0 20px;
+        overflow: hidden;
+        align-items: center;
+
+        color: var(--molview-white);
+        background-color: var(--paper-red-a100);
+        border-radius: 3px;
+
+        /* Fix for ripple overflow at border-radius during transition */
+        -webkit-backface-visibility: hidden;
+        -webkit-transform: translate3d(0, 0, 0);
+      }
+
+      #bar.focussed {
+        color: var(--molview-black);
+      }
+
+      #input {
+        z-index: 0;
+        border: none;
+        outline: none;
+        background: none;
+        margin-left: 10px;
+        flex: 1;
+
+        color: var(--molview-white);
+
+        /* For some reason fonts have to be explicitly defined for inputs */
+        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      }
+
+      #input:focus {
+        color: var(--molview-black);
+      }
+
+      /* Cross-browser placeholder color */
+      #input::-webkit-input-placeholder {
+        color: var(--paper-red-50); } /* WebKit, Blink, Edge */
+      #input:-moz-placeholder {
+        color: var(--paper-red-50); } /* Mozilla Firefox 4 to 18 */
+      #input::-moz-placeholder {
+        color: var(--paper-red-50); } /* Mozilla Firefox 19+ */
+      #input:-ms-input-placeholder {
+        color: var(--paper-red-50); } /* Internet Explorer 10-11 */
+
+      #input:focus::-webkit-input-placeholder {
+        color: var(--molview-black); } /* WebKit, Blink, Edge */
+      #input:focus:-moz-placeholder {
+        color: var(--molview-black); } /* Mozilla Firefox 4 to 18 */
+      #input:focus::-moz-placeholder {
+        color: var(--molview-black); } /* Mozilla Firefox 19+ */
+      #input:focus:-ms-input-placeholder {
+        color: var(--molview-black); } /* Internet Explorer 10-11 */
+
+      #ripple {
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        left: 13px;
+        width: 38px;
+        height: 38px;
+
+        opacity: 0;
+        background: white;
+        border-radius: 50%;
+        transform: scale(1);
+        transition: opacity .3s ease-in, transform .3s ease-out;
+      }
+
+      #ripple.down {
+        opacity: 1;
+        transform: scale(30);
+        transition: opacity .1s ease-out, transform .3s ease-in;
+      }
+    </style>
+
+    <paper-material id="bar" class="layout horizontal" elevation="1">
+      <div id="ripple"></div>
+      <iron-icon icon="search"></iron-icon>
+      <input
+          id="input"
+          placeholder="Type to search..."
+          autocomplete="off"
+          spellcheck="false"></input>
+    </paper-material>
+  </template>
+</dom-module>

@@ -47,7 +47,7 @@
         margin: 8px 13px;
       }
 
-      #searchbar {
+      #search-input {
         padding: 0 20px;
         flex: 1;
       }
@@ -59,87 +59,9 @@
           display: inherit;
         }
 
-        #searchbar {
+        #search-input {
           padding: 0 30px;
         }
-      }
-
-      #search {
-        position: relative;
-        max-width: 500px;
-        height: 38px;
-        padding: 0 20px;
-        overflow: hidden;
-        align-items: center;
-
-        color: var(--molview-white);
-        background-color: var(--paper-red-a100);
-        border-radius: 3px;
-
-        /* Fix for ripple overflow at border-radius during transition */
-        -webkit-backface-visibility: hidden;
-        -webkit-transform: translate3d(0, 0, 0);
-      }
-
-      #search.focussed {
-        color: var(--molview-black);
-      }
-
-      #search-input {
-        z-index: 0;
-        border: none;
-        outline: none;
-        background: none;
-        margin-left: 10px;
-        flex: 1;
-
-        color: var(--molview-white);
-
-        /* For some reason fonts have to be explicitly defined for inputs */
-        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      }
-
-      #search-input:focus {
-        color: var(--molview-black);
-      }
-
-      /* Cross-browser placeholder color */
-      #search-input::-webkit-input-placeholder {
-        color: var(--paper-red-50); } /* WebKit, Blink, Edge */
-      #search-input:-moz-placeholder {
-        color: var(--paper-red-50); } /* Mozilla Firefox 4 to 18 */
-      #search-input::-moz-placeholder {
-        color: var(--paper-red-50); } /* Mozilla Firefox 19+ */
-      #search-input:-ms-input-placeholder {
-        color: var(--paper-red-50); } /* Internet Explorer 10-11 */
-
-      #search-input:focus::-webkit-input-placeholder {
-        color: var(--molview-black); } /* WebKit, Blink, Edge */
-      #search-input:focus:-moz-placeholder {
-        color: var(--molview-black); } /* Mozilla Firefox 4 to 18 */
-      #search-input:focus::-moz-placeholder {
-        color: var(--molview-black); } /* Mozilla Firefox 19+ */
-      #search-input:focus:-ms-input-placeholder {
-        color: var(--molview-black); } /* Internet Explorer 10-11 */
-
-      #search-ripple {
-        position: absolute;
-        border-radius: 50%;
-        top: 0;
-        left: 13px;
-        width: 38px;
-        height: 38px;
-
-        opacity: 0;
-        background: white;
-        transform: scale(1);
-        transition: opacity .3s ease-in, transform .3s ease-out;
-      }
-
-      #search-ripple.down {
-        opacity: 1;
-        transform: scale(30);
-        transition: opacity .1s ease-out, transform .3s ease-in;
       }
     </style>
 
@@ -153,17 +75,7 @@
           src="[[logo]]"
           sizing="contain"></iron-image>
       <!-- Search bar wrapper -->
-      <div id="searchbar">
-        <paper-material id="search" class="layout horizontal" elevation="1">
-          <div id="search-ripple"></div>
-          <iron-icon id="search-icon" icon="search"></iron-icon>
-          <input
-              id="search-input"
-              placeholder="Type to search..."
-              autocomplete="off"
-              spellcheck="false"></input>
-        </paper-material>
-      </div>
+      <molview-search-input id="search-input"></molview-search-input>
       <!-- Quick help button -->
       <content select=".molview-help-button"></content>
     </div>
