@@ -41,43 +41,50 @@
       }
 
       #molview-logo {
-        display: none;
         width: 110px;
         height: 20px;
         margin: 8px 13px;
       }
 
       #search-input {
-        padding: 0 20px;
         flex: 1;
+        margin: 0 30px;
       }
 
-      /* Mobile first approach: logo is hidden by default */
-      @media (min-width: 600px)
+      /* Mobile layout tweaks */
+      @media (max-width: 600px)
       {
-        #molview-logo {
-          display: inherit;
+        #molview-logo, #drawer-toggle, #help-button {
+          display: none;
         }
 
         #search-input {
-          padding: 0 30px;
+          margin: 0;
         }
       }
     </style>
 
-    <!-- Fist bar -->
+    <iron-media-query
+        query="(max-width: 600px)"
+        query-matches="{{mini-toolbar}}"></iron-media-query>
+
     <div id="toolbar" class="layout horizontal">
       <!-- Drawer menu toggle -->
-      <content select=".molview-drawer-toggle"></content>
+      <paper-icon-button
+          id="drawer-toggle"
+          icon="menu"></paper-icon-button>
       <!-- MolView brand -->
       <iron-image
           id="molview-logo"
           src="[[logo]]"
           sizing="contain"></iron-image>
       <!-- Search bar wrapper -->
-      <molview-search-input id="search-input"></molview-search-input>
+      <molview-search-input id="search-input" mini-toolbar$="{{mini-toolbar}}">
+      </molview-search-input>
       <!-- Quick help button -->
-      <content select=".molview-help-button"></content>
+      <paper-icon-button
+          id="help-button"
+          icon="help-outline"></paper-icon-button>
     </div>
     <!-- Scopes tabs -->
     <paper-tabs selected="0" scrollable noInk>

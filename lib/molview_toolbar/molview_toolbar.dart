@@ -5,6 +5,8 @@
 @HtmlImport('molview_toolbar.html')
 library molview_web.molview_toolbar;
 
+import 'dart:html';
+
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
 
@@ -12,6 +14,8 @@ import 'package:web_components/web_components.dart' show HtmlImport;
 import 'package:polymer_elements/color.dart';
 // ignore: UNUSED_IMPORT
 import 'package:polymer_elements/iron_flex_layout.dart';
+// ignore: UNUSED_IMPORT
+import 'package:polymer_elements/iron_media_query.dart';
 // ignore: UNUSED_IMPORT
 import 'package:polymer_elements/iron_image.dart';
 // ignore: UNUSED_IMPORT
@@ -26,4 +30,9 @@ import 'package:molview_web/molview_search_input/molview_search_input.dart';
 @PolymerRegister('molview-toolbar')
 class MolViewToolbar extends PolymerElement {
   MolViewToolbar.created() : super.created();
+
+  @Listen('drawer-toggle.tap')
+  void onDrawerToggleTap(Event event, Map detail) {
+    fire('drawer-toggle');
+  }
 }

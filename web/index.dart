@@ -9,27 +9,11 @@ import 'package:web_components/web_components.dart' show HtmlImport;
 // ignore: UNUSED_IMPORT
 import 'package:polymer/polymer.dart';
 // ignore: UNUSED_IMPORT
-import 'package:polymer_elements/iron_icon.dart';
-// ignore: UNUSED_IMPORT
-import 'package:polymer_elements/iron_icons.dart';
-// ignore: UNUSED_IMPORT
 import 'package:polymer_elements/paper_styles.dart';
 // ignore: UNUSED_IMPORT
 import 'package:polymer_elements/typography.dart';
 // ignore: UNUSED_IMPORT
-import 'package:polymer_elements/paper_menu.dart';
-// ignore: UNUSED_IMPORT
-import 'package:polymer_elements/paper_toolbar.dart';
-// ignore: UNUSED_IMPORT
-import 'package:polymer_elements/paper_icon_button.dart';
-// ignore: UNUSED_IMPORT
-import 'package:polymer_elements/paper_icon_item.dart';
-// ignore: UNUSED_IMPORT
-import 'package:polymer_elements/paper_drawer_panel.dart';
-// ignore: UNUSED_IMPORT
-import 'package:polymer_elements/paper_header_panel.dart';
-// ignore: UNUSED_IMPORT
-import 'package:molview_web/molview_toolbar/molview_toolbar.dart';
+import 'package:molview_web/molview_web/molview_web.dart';
 
 Future main() async {
   await initPolymer();

@@ -11,75 +11,16 @@
       :root {
         --molview-white: #fff;
         --molview-black: #000;
+        --molview-radius: 3px;
       }
 
       body {
         font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       }
-
-      paper-menu {
-        --paper-menu-color: var(--paper-grey-800);
-      }
-
-      paper-toolbar {
-        background-color: var(--paper-red-500);
-      }
     </style>
   </head>
   <body unresolved class="fullbleed">
-    <!-- Main menu -->
-    <paper-drawer-panel force-narrow  disable-edge-swipe>
-      <paper-header-panel drawer>
-        <paper-toolbar>
-          <span class="title">Menu</span>
-        </paper-toolbar>
-        <paper-menu>
-          <paper-icon-item>
-            <iron-icon icon="save" item-icon></iron-icon>
-            Save
-          </paper-icon-item>
-          <paper-icon-item>
-            <iron-icon icon="file-download" item-icon></iron-icon>
-            Load
-          </paper-icon-item>
-          <paper-icon-item>
-            <iron-icon icon="file-upload" item-icon></iron-icon>
-            Export
-          </paper-icon-item>
-          <paper-icon-item>
-            <iron-icon icon="feedback" item-icon></iron-icon>
-            Feedback
-          </paper-icon-item>
-          <paper-icon-item>
-            <iron-icon icon="language" item-icon></iron-icon>
-            Language
-          </paper-icon-item>
-          <paper-icon-item>
-            <iron-icon icon="apps" item-icon></iron-icon>
-            Modules
-          </paper-icon-item>
-          <paper-icon-item>
-            <iron-icon icon="help" item-icon></iron-icon>
-            Tutorials
-          </paper-icon-item>
-          <paper-icon-item>
-            <iron-icon icon="info" item-icon></iron-icon>
-            About
-          </paper-icon-item>
-        </paper-menu>
-      </paper-header-panel>
-      <paper-header-panel main>
-        <molview-toolbar logo="images/logo.svg" class="paper-header">
-          <paper-icon-button
-              class="molview-drawer-toggle"
-              icon="menu"
-              paper-drawer-toggle></paper-icon-button>
-          <paper-icon-button
-              class="molview-help-button"
-              icon="help-outline"></paper-icon-button>
-        </molview-toolbar>
-      </paper-header-panel>
-    </paper-drawer-panel>
+    <molview-web></molview-web>
     <script type="application/dart" src="index.dart"></script>
     <script src="packages/browser/dart.js"></script>
   </body>

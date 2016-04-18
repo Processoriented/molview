@@ -20,42 +20,29 @@ import 'package:polymer_elements/iron_icon.dart';
 import 'package:polymer_elements/iron_icons.dart';
 // ignore: UNUSED_IMPORT
 import 'package:polymer_elements/paper_material.dart';
+// ignore: UNUSED_IMPORT
+import 'package:polymer_elements/paper_icon_button.dart';
 
 @PolymerRegister('molview-search-input')
 class MolViewSearchInput extends PolymerElement {
   MolViewSearchInput.created() : super.created();
 
-  /// Store if the search bar is focussed.
-  bool _searchFocus = false;
-
-  @Listen('bar.tap')
-  void onBarTap(Event event, Map detail) {
-    if (!_searchFocus) {
-      $$("#input").focus();
-      _searchFocus = true;
-    }
-  }
-
-  @Listen('bar.down')
-  void onBarPointerDown(Event event, Map detail) {
-    // Prevent any blurring if the user clicks outside the input inside the bar.
-    //
-    // Note: also prevents focussing by clicking the input, but that is ok since
-    // tap wil handle this already.
-    event.preventDefault();
-  }
-
   @Listen('input.focus')
   void onInputFocus(Event event, Map detail) {
-    $$("#bar").classes.add('focussed');
-    $$("#ripple").classes.add('down');
-    _searchFocus = true;
+    $['bar'].classes.add('focussed');
+    $['ripple'].classes.add('down');
+    $['left-button'].classes.add('focussed');
   }
 
   @Listen('input.blur')
   void onInputBlur(Event event, Map detail) {
-    $$("#bar").classes.remove('focussed');
-    $$("#ripple").classes.remove('down');
-    _searchFocus = false;
+    $['bar'].classes.remove('focussed');
+    $['ripple'].classes.remove('down');
+    $['left-button'].classes.remove('focussed');
+  }
+
+  @Listen('drawer-toggle.tap')
+  void onDrawerToggleTap(Event event, Map detail) {
+    fire('drawer-toggle');
   }
 }

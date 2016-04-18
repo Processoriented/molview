@@ -1,0 +1,59 @@
+<dom-module id="molview-web">
+  <template>
+    <style>
+      paper-menu {
+        --paper-menu-color: var(--paper-grey-800);
+      }
+
+      paper-toolbar {
+        background-color: var(--paper-red-500);
+      }
+    </style>
+
+    <paper-drawer-panel id="drawer-menu" force-narrow  disable-edge-swipe>
+      <paper-header-panel drawer>
+        <paper-toolbar>
+          <span class="title">Menu</span>
+        </paper-toolbar>
+        <paper-menu>
+          <paper-icon-item>
+            <iron-icon icon="save" item-icon></iron-icon>
+            Save
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="file-download" item-icon></iron-icon>
+            Load
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="file-upload" item-icon></iron-icon>
+            Export
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="feedback" item-icon></iron-icon>
+            Feedback
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="language" item-icon></iron-icon>
+            Language
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="apps" item-icon></iron-icon>
+            Modules
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="help" item-icon></iron-icon>
+            Tutorials
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="info" item-icon></iron-icon>
+            About
+          </paper-icon-item>
+        </paper-menu>
+      </paper-header-panel>
+      <paper-header-panel main>
+        <molview-toolbar id="toolbar" logo="images/logo.svg" class="paper-header">
+        </molview-toolbar>
+      </paper-header-panel>
+    </paper-drawer-panel>
+  </template>
+</dom-module>
