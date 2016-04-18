@@ -7,7 +7,7 @@
         --input-padding: 20px;
         --input-height: 38px;
         --input-width: 500px;
-        --popup-margin: 30px;
+        --popup-speed: .3s;
       }
 
       paper-input {
@@ -17,7 +17,6 @@
 
       #bar {
         position: relative;
-        max-width: var(--input-width);
         height: var(--input-height);
         overflow: hidden;
         align-items: center;
@@ -29,20 +28,26 @@
         /* Fix for ripple overflow at border-radius during transition */
         -webkit-backface-visibility: hidden;
         -webkit-transform: translate3d(0, 0, 0);
+
+        /* Change border-radius backt to normal after popup is collapsed */
+        transition: border-radius;
+        transition-delay: var(--popup-speed);
       }
 
       #bar.focussed {
         color: var(--molview-black);
+        border-radius: var(--molview-radius) var(--molview-radius) 0 0;
+        transition-delay: 0s;
+      }
+
+      :host:not([mini-toolbar]) #bar {
+        max-width: var(--input-width);
       }
 
       /* Left button in .mini-toolbar */
 
-      #left-button {
+      :host:not([mini-toolbar]) #left-button {
         display: none;
-      }
-
-      :host[mini-toolbar] #left-button {
-        display: inherit;
       }
 
       #drawer-toggle, #arrow-back {
@@ -50,16 +55,15 @@
       }
 
       #arrow-back {
-        display: none;
         padding: 8px;
       }
 
-      #left-button.focussed > #drawer-toggle {
+      #left-button.visible > #drawer-toggle {
         display: none;
       }
 
-      #left-button.focussed > #arrow-back {
-        display: inherit;
+      #left-button:not(.visible) > #arrow-back {
+        display: none;
       }
 
       /* Search icon (not displayed in .mini-toolbar) */
@@ -129,15 +133,14 @@
         width: var(--input-height);
         height: var(--input-height);
 
-        opacity: 0;
-        background: white;
+        background-color: rgba(255, 255, 255, 0);
         border-radius: 50%;
         transform: scale(1);
-        transition: opacity .3s ease-in, transform .3s ease-out;
+        transition: background-color .3s ease-in, transform .3s ease-out;
       }
 
       #ripple.down {
-        opacity: 1;
+        background-color: rgba(255, 255, 255, 1);
         transform: scale(30);
         transition: opacity .1s ease-out, transform .3s ease-in;
       }
@@ -145,26 +148,41 @@
       /* Search popup */
 
       #popup-wrapper {
-        position: absolute;
-        margin-top: calc((64px - var(--input-height)) / 2);
-        left: calc(-1 * var(--popup-margin));
-        right: calc(-1 * var(--popup-margin));
-        overflow: hidden;
+        z-index: 1;
+        position: fixed;
+        top: calc(32px + var(--input-height) / 2);
+        bottom: 0;
+      }
+
+      #popup-wrapper:not(.visible) {
+        pointer-events: none;
       }
 
       #popup {
-        /* Under development */
-        display: none;
-
-        z-index: 1;
+        position: relative;
         top: 0;
-        margin: 0 var(--popup-margin) var(--popup-margin) var(--popup-margin);
-        max-width: var(--input-width);
+        height: 0;
+        transition: var(--popup-speed) height;
+        overflow: hidden;
+
         background: var(--molview-white);
-
         border-radius: 0 0 var(--molview-radius) var(--molview-radius);
+      }
 
-        height: 300px;
+      #popup-list {
+        display: table;
+        margin: 0;
+        padding: 10px 0;
+        color: var(--molview-black);
+      }
+
+      #popup-list > li {
+        padding: 10px 10px 10px 60px;
+        list-style: none;
+      }
+
+      :host[mini-toolbar] #popup-list > li {
+        padding-left: 50px;
       }
     </style>
 
@@ -189,6 +207,13 @@
     </paper-material>
     <div id="popup-wrapper">
       <paper-material id="popup" class="layout horizontal" elevation="3">
+        <ol id="popup-list">
+          <li>PubChem</li>
+          <li>ChemSpider</li>
+          <li>ChEMBL</li>
+          <li>PDB</li>
+          <li>COD</li>
+        </ol>
       </paper-material>
     </div>
   </template>

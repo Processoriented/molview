@@ -23,22 +23,51 @@ import 'package:polymer_elements/paper_material.dart';
 // ignore: UNUSED_IMPORT
 import 'package:polymer_elements/paper_icon_button.dart';
 
+/// TODO: Find a way to make the popup scrollable on small heights.
+/// TODO: Implement using IronResizableBehavior?
 @PolymerRegister('molview-search-input')
 class MolViewSearchInput extends PolymerElement {
-  MolViewSearchInput.created() : super.created();
+  /// Store if the input is focussed.
+  bool isFocussed = false;
+
+  MolViewSearchInput.created() : super.created() {
+    window.addEventListener('resize', (_) {
+      $['popup-wrapper'].style.width = '${$['bar'].clientWidth}px';
+
+      // Only resize popup height if the popup is visible.
+      if (isFocussed) {
+        $['popup'].style.height = '${$['popup-list'].clientHeight}px';
+      }
+    });
+  }
 
   @Listen('input.focus')
   void onInputFocus(Event event, Map detail) {
-    $['bar'].classes.add('focussed');
+    isFocussed = true;
+
+    // Set styles.
     $['ripple'].classes.add('down');
-    $['left-button'].classes.add('focussed');
+    $['bar'].classes.add('focussed');
+    $['left-button'].classes.add('visible');
+    $['popup-wrapper'].classes.add('visible');
+
+    // Resize popup.
+    $['popup-wrapper'].style.width = '${$['bar'].clientWidth}px';
+    $['popup'].style.height = '${$['popup-list'].clientHeight}px';
   }
 
   @Listen('input.blur')
   void onInputBlur(Event event, Map detail) {
-    $['bar'].classes.remove('focussed');
+    isFocussed = false;
+
+    // Set styles.
     $['ripple'].classes.remove('down');
-    $['left-button'].classes.remove('focussed');
+    $['bar'].classes.remove('focussed');
+    $['left-button'].classes.remove('visible');
+    $['popup-wrapper'].classes.remove('visible');
+
+    // Set popup height back to 0.
+    $['popup'].style.height = '0px';
   }
 
   @Listen('drawer-toggle.tap')
