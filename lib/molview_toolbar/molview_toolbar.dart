@@ -31,6 +31,12 @@ import 'package:molview_web/molview_search_input/molview_search_input.dart';
 class MolViewToolbar extends PolymerElement {
   MolViewToolbar.created() : super.created();
 
+  /// Get inner <molview-search-input>
+  MolViewSearchInput getSearchInput() {
+    return $['search-input'] as MolViewSearchInput;
+  }
+
+  /// Fire custom 'drawer-toggle' event when the drawer-toggle is tapped.
   @Listen('drawer-toggle.tap')
   void onDrawerToggleTap(Event event, Map detail) {
     fire('drawer-toggle');

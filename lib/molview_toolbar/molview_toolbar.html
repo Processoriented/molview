@@ -38,6 +38,8 @@
         padding: 0 16px;
         height: 64px;
         align-items: center;
+
+        @apply(--layout-horizontal);
       }
 
       #molview-logo {
@@ -68,7 +70,7 @@
         query="(max-width: 600px)"
         query-matches="{{mini-toolbar}}"></iron-media-query>
 
-    <div id="toolbar" class="layout horizontal">
+    <div id="toolbar">
       <!-- Drawer menu toggle -->
       <paper-icon-button
           id="drawer-toggle"

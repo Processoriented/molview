@@ -22,29 +22,67 @@ import 'package:polymer_elements/iron_icons.dart';
 import 'package:polymer_elements/paper_material.dart';
 // ignore: UNUSED_IMPORT
 import 'package:polymer_elements/paper_icon_button.dart';
+// ignore: UNUSED_IMPORT
+import 'package:molview_web/molview_search_input/search_popup_item.dart';
 
 /// TODO: Find a way to make the popup scrollable on small heights.
 /// TODO: Implement using IronResizableBehavior?
 @PolymerRegister('molview-search-input')
 class MolViewSearchInput extends PolymerElement {
   /// Store if the input is focussed.
-  bool isFocussed = false;
+  bool _isFocussed = false;
 
+  /// Constructor
   MolViewSearchInput.created() : super.created() {
     // Resize the popup.
     window.addEventListener('resize', (_) {
-      $['popup-wrapper'].style.width = '${$['bar'].clientWidth}px';
-
-      // Only resize popup height if the popup is visible.
-      if (isFocussed) {
-        $['popup'].style.height = '${$['popup-list'].clientHeight}px';
+      // Only resize popup if the popup is visible.
+      if (_isFocussed) {
+        _updatePopupDimensions();
       }
     });
   }
 
+  /// Getter for the input value
+  String get value => $['input'].value;
+
+  /// Update popup with new suggestions.
+  void setSuggestions(List<String> suggestions) {
+    DivElement list = $['popup-list'];
+    list.children.clear();
+    suggestions.forEach((String suggestion) {
+      list.append(new SearchPopupItem(suggestion));
+    });
+
+    _updatePopupItemsPadding();
+  }
+
+  /// Dynamically update the popup items left padding.
+  void _updatePopupItemsPadding() {
+    bool mini = attributes.containsKey('mini-toolbar');
+    DivElement list = $['popup-list'];
+    list.childNodes.forEach((Node node) {
+      var elm = node as Element;
+      elm.style.paddingLeft = mini ? '50px' : '60px';
+    });
+  }
+
+  /// Update the popup dimensions
+  void _updatePopupDimensions() {
+    $['popup-wrapper'].style.width = '${$['bar'].clientWidth}px';
+    $['popup'].style.height = '${$['popup-list'].clientHeight}px';
+    _updatePopupItemsPadding();
+  }
+
+  /// Add event listener to the input change event.
+  void onValueChange(EventListener listener) {
+    $['input'].onInput.listen(listener);
+  }
+
+  /// Set input and popup syles when the text input is focussed.
   @Listen('input.focus')
   void onInputFocus(Event event, Map detail) {
-    isFocussed = true;
+    _isFocussed = true;
 
     // Set styles.
     $['ripple'].classes.add('down');
@@ -52,14 +90,13 @@ class MolViewSearchInput extends PolymerElement {
     $['left-button'].classes.add('visible');
     $['popup-wrapper'].classes.add('visible');
 
-    // Resize popup.
-    $['popup-wrapper'].style.width = '${$['bar'].clientWidth}px';
-    $['popup'].style.height = '${$['popup-list'].clientHeight}px';
+    _updatePopupDimensions();
   }
 
+  /// Reset input and popup syles when the text input is blurred.
   @Listen('input.blur')
   void onInputBlur(Event event, Map detail) {
-    isFocussed = false;
+    _isFocussed = false;
 
     // Set styles.
     $['ripple'].classes.remove('down');
@@ -71,6 +108,7 @@ class MolViewSearchInput extends PolymerElement {
     $['popup'].style.height = '0px';
   }
 
+  /// Fire custom 'drawer-toggle' event when the drawer-toggle is tapped.
   @Listen('drawer-toggle.tap')
   void onDrawerToggleTap(Event event, Map detail) {
     fire('drawer-toggle');

@@ -2,7 +2,10 @@
 // Use of this source code is governed by an AGPL-3.0-style license
 // that can be found in the LICENSE file.
 
+import 'dart:html';
 import 'dart:async';
+
+import 'package:omnibus/omnibus.dart';
 
 // ignore: UNUSED_IMPORT
 import 'package:web_components/web_components.dart' show HtmlImport;
@@ -15,6 +18,15 @@ import 'package:polymer_elements/typography.dart';
 // ignore: UNUSED_IMPORT
 import 'package:molview_web/molview_web/molview_web.dart';
 
+import 'modules.dart';
+
+/// The main function of all main functions
 Future main() async {
   await initPolymer();
+
+  // Create new message bus and bind <molview-web> first.
+  var bus = new Omnibus();
+  var web = querySelector('molview-web') as MolViewWeb;
+  web.setMessagesBus(bus);
+  loadModules(bus);
 }
