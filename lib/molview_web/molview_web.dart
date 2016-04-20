@@ -82,7 +82,10 @@ class MolViewWeb extends PolymerElement {
           }
 
           // Load new suggestions into input popup.
-          _input.setSuggestions(suggestions);
+          // Check if the value has changed since.
+          if (value == _input.value) {
+            _input.setSuggestions(suggestions);
+          }
         } else {
           // Set the autocomplete popup to the default content.
           _input.setSuggestions(defaultSuggestions);
