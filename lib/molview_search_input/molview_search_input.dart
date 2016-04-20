@@ -31,6 +31,7 @@ class MolViewSearchInput extends PolymerElement {
   bool isFocussed = false;
 
   MolViewSearchInput.created() : super.created() {
+    // Resize the popup.
     window.addEventListener('resize', (_) {
       $['popup-wrapper'].style.width = '${$['bar'].clientWidth}px';
 
