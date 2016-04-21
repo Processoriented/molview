@@ -7,6 +7,7 @@ library molview_web.molview_search_input;
 
 import 'dart:html';
 import 'dart:math';
+import 'dart:async';
 
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
@@ -26,17 +27,37 @@ import 'package:polymer_elements/paper_icon_button.dart';
 // ignore: UNUSED_IMPORT
 import 'package:molview_web/molview_search_input/search_popup_item.dart';
 
-/// TODO: Arrow keys to navigate through popup list items.
 @PolymerRegister('molview-search-input')
 class MolViewSearchInput extends PolymerElement {
   /// Store if the input is focussed.
   bool _isFocussed = false;
 
+  /// Selected popup item, -1 if none is selected.
+  int _selectedItem = -1;
+
   /// Constructor
   MolViewSearchInput.created() : super.created() {
-    // Resize the popup.
+    // Resize the popup onresize.
     window.addEventListener('resize', (_) {
-      _updatePopupDimensions();
+      // Always update width because the popup can still be visible when it is
+      // unfocussed due to the transition.
+      _updatePopupDimensions(true, _isFocussed, true);
+    });
+
+    // Popup arrow navigation
+    $['input'].onKeyDown.listen((KeyboardEvent e) {
+      switch (e.keyCode) {
+        case KeyCode.UP:
+          setSelectedItem(_selectedItem == 0
+              ? $['popup-list'].childNodes.length - 1
+              : _selectedItem - 1);
+          break;
+        case KeyCode.DOWN:
+          setSelectedItem(_selectedItem + 1 == $['popup-list'].childNodes.length
+              ? 0
+              : _selectedItem + 1);
+          break;
+      }
     });
   }
 
@@ -51,7 +72,33 @@ class MolViewSearchInput extends PolymerElement {
       list.append(new SearchPopupItem(suggestion));
     });
 
-    _updatePopupDimensions();
+    _updatePopupItemsPadding();
+
+    // Delay so the UI can update the height of the list.
+    if (_isFocussed) {
+      new Future(() {
+        _updatePopupDimensions(false, true, false);
+      });
+    }
+
+    // Clear selection.
+    _selectedItem = -1;
+  }
+
+  /// Change popup selected item index.
+  void setSelectedItem(int idx) {
+    print(idx);
+
+    // Unselect currently selected item.
+    if (_selectedItem != -1) {
+      $['popup-list'].childNodes[_selectedItem].attributes.remove('selected');
+    }
+
+    // Select new item.
+    if (idx != -1) {
+      _selectedItem = idx;
+      $['popup-list'].childNodes[_selectedItem].attributes['selected'] = '';
+    }
   }
 
   /// Dynamically update the popup items left padding.
@@ -65,10 +112,12 @@ class MolViewSearchInput extends PolymerElement {
   }
 
   /// Update the popup dimensions
-  void _updatePopupDimensions() {
-    $['popup'].style.width = '${$['bar'].clientWidth}px';
+  void _updatePopupDimensions(bool width, bool height, bool padding) {
+    if (width) {
+      $['popup'].style.width = '${$['bar'].clientWidth}px';
+    }
 
-    if (_isFocussed) {
+    if (height) {
       var maxHeight = document.body.clientHeight - $['popup'].documentOffset.y;
       var popupHeight = min($['popup-list'].clientHeight, maxHeight);
 
@@ -76,7 +125,9 @@ class MolViewSearchInput extends PolymerElement {
       $['popup-scroll'].style.height = '${popupHeight}px';
     }
 
-    _updatePopupItemsPadding();
+    if (padding) {
+      _updatePopupItemsPadding();
+    }
   }
 
   /// Add event listener to the input change event.
@@ -94,7 +145,9 @@ class MolViewSearchInput extends PolymerElement {
     $['bar'].classes.add('focussed');
     $['left-button'].classes.add('visible');
 
-    _updatePopupDimensions();
+    // Note that the width actually only has to be updated once at te beginning
+    // when no width is set yet.
+    _updatePopupDimensions(true, true, false);
   }
 
   /// Reset input and popup syles when the text input is blurred.

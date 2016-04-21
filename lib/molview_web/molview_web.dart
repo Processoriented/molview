@@ -6,6 +6,7 @@
 library molview_web.molview_web;
 
 import 'dart:html';
+import 'dart:async';
 
 import 'package:omnibus/omnibus.dart';
 import 'package:molview_messages/molview_messages_v0.dart' as v0;
@@ -56,41 +57,45 @@ class MolViewWeb extends PolymerElement {
 
   /// Constructor
   MolViewWeb.created() : super.created() {
-    _input = $['toolbar'].getSearchInput();
+    // Delay because running this code right away causes the drawer to open and
+    // close in Firefox (yeah, really weird).
+    new Future(() {
+      _input = $['toolbar'].getSearchInput();
 
-    // Set popup contents to default suggestions by default.
-    _input.setSuggestions(defaultSuggestions);
+      // Set popup contents to default suggestions by default.
+      _input.setSuggestions(defaultSuggestions);
 
-    // Add callback for search input change.
-    _input.onValueChange((Event event) async {
-      // Use message bus to find search suggesions.
-      if (_bus != null) {
-        // Only proceed if the value is longer than the threshold number.
-        var value = _input.value;
-        if (value.length > autocompleteThreshold) {
-          // Get suggestions using a FindSearchSuggestions request.
-          var responses =
-              await _bus.publishRequest(new v0.FindSearchSuggestions(value, 5));
-          var stream = v0.streamSearchSuggestions(responses);
+      // Add callback for search input change.
+      _input.onValueChange((Event event) async {
+        // Use message bus to find search suggesions.
+        if (_bus != null) {
+          // Only proceed if the value is longer than the threshold number.
+          var value = _input.value;
+          if (value.length > autocompleteThreshold) {
+            // Get suggestions using a FindSearchSuggestions request.
+            var responses = await _bus
+                .publishRequest(new v0.FindSearchSuggestions(value, 5));
+            var stream = v0.streamSearchSuggestions(responses);
 
-          // Add all suggestions to the suggesions list.
-          var suggestions = new List<String>();
-          await for (var response in stream) {
-            suggestions.addAll(new List<String>.generate(
-                response.suggestions.length,
-                (int i) => response.suggestions[i].title));
+            // Add all suggestions to the suggesions list.
+            var suggestions = new List<String>();
+            await for (var response in stream) {
+              suggestions.addAll(new List<String>.generate(
+                  response.suggestions.length,
+                  (int i) => response.suggestions[i].title));
+            }
+
+            // Load new suggestions into input popup.
+            // Check if the value has changed since.
+            if (value == _input.value) {
+              _input.setSuggestions(suggestions);
+            }
+          } else {
+            // Set the autocomplete popup to the default content.
+            _input.setSuggestions(defaultSuggestions);
           }
-
-          // Load new suggestions into input popup.
-          // Check if the value has changed since.
-          if (value == _input.value) {
-            _input.setSuggestions(suggestions);
-          }
-        } else {
-          // Set the autocomplete popup to the default content.
-          _input.setSuggestions(defaultSuggestions);
         }
-      }
+      });
     });
   }
 
