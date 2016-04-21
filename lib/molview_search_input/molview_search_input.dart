@@ -6,6 +6,7 @@
 library molview_web.molview_search_input;
 
 import 'dart:html';
+import 'dart:math';
 
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
@@ -25,8 +26,7 @@ import 'package:polymer_elements/paper_icon_button.dart';
 // ignore: UNUSED_IMPORT
 import 'package:molview_web/molview_search_input/search_popup_item.dart';
 
-/// TODO: Find a way to make the popup scrollable on small heights.
-/// TODO: Implement using IronResizableBehavior?
+/// TODO: Arrow keys to navigate through popup list items.
 @PolymerRegister('molview-search-input')
 class MolViewSearchInput extends PolymerElement {
   /// Store if the input is focussed.
@@ -36,10 +36,7 @@ class MolViewSearchInput extends PolymerElement {
   MolViewSearchInput.created() : super.created() {
     // Resize the popup.
     window.addEventListener('resize', (_) {
-      // Only resize popup if the popup is visible.
-      if (_isFocussed) {
-        _updatePopupDimensions();
-      }
+      _updatePopupDimensions();
     });
   }
 
@@ -54,7 +51,7 @@ class MolViewSearchInput extends PolymerElement {
       list.append(new SearchPopupItem(suggestion));
     });
 
-    _updatePopupItemsPadding();
+    _updatePopupDimensions();
   }
 
   /// Dynamically update the popup items left padding.
@@ -69,8 +66,16 @@ class MolViewSearchInput extends PolymerElement {
 
   /// Update the popup dimensions
   void _updatePopupDimensions() {
-    $['popup-wrapper'].style.width = '${$['bar'].clientWidth}px';
-    $['popup'].style.height = '${$['popup-list'].clientHeight}px';
+    $['popup'].style.width = '${$['bar'].clientWidth}px';
+
+    if (_isFocussed) {
+      var maxHeight = document.body.clientHeight - $['popup'].documentOffset.y;
+      var popupHeight = min($['popup-list'].clientHeight, maxHeight);
+
+      $['popup'].style.height = '${popupHeight}px';
+      $['popup-scroll'].style.height = '${popupHeight}px';
+    }
+
     _updatePopupItemsPadding();
   }
 
@@ -88,7 +93,6 @@ class MolViewSearchInput extends PolymerElement {
     $['ripple'].classes.add('down');
     $['bar'].classes.add('focussed');
     $['left-button'].classes.add('visible');
-    $['popup-wrapper'].classes.add('visible');
 
     _updatePopupDimensions();
   }
@@ -102,9 +106,8 @@ class MolViewSearchInput extends PolymerElement {
     $['ripple'].classes.remove('down');
     $['bar'].classes.remove('focussed');
     $['left-button'].classes.remove('visible');
-    $['popup-wrapper'].classes.remove('visible');
 
-    // Set popup height back to 0.
+    // Set popup height back to 0 (collapse transition).
     $['popup'].style.height = '0px';
   }
 

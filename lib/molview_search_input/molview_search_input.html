@@ -145,46 +145,31 @@
       #ripple.down {
         background-color: rgba(255, 255, 255, 1);
         transform: scale(30);
-        transition: opacity .1s ease-out, transform .3s ease-in;
+        transition: background-color .1s ease-out, transform .3s ease-in;
       }
 
       /* Search popup */
 
-      #popup-wrapper {
-        z-index: 1;
-        position: fixed;
-        top: calc(32px + var(--input-height) / 2);
-        bottom: 0;
-      }
-
-      #popup-wrapper:not(.visible) {
-        pointer-events: none;
-      }
-
       #popup {
-        position: relative;
-        top: 0;
+        position: fixed;
+        z-index: 1;
+        top: calc(32px + var(--input-height) / 2);
         height: 0;
-        transition: var(--popup-speed) height;
         overflow: hidden;
 
         background: var(--molview-white);
         border-radius: 0 0 var(--molview-radius) var(--molview-radius);
+        transition: var(--popup-speed) height;
+      }
+
+      #popup-scroll {
+        overflow: auto;
       }
 
       #popup-list {
         width: 100%;
-        margin: 0;
         padding: 10px 0;
         color: var(--molview-black);
-      }
-
-      search-popup-item {
-        padding-left: 60px;
-      }
-
-      :host[mini-toolbar] search-popup-item {
-        padding-left: 50px;
       }
     </style>
 
@@ -207,10 +192,10 @@
           autocomplete="off"
           spellcheck="false"></input>
     </paper-material>
-    <div id="popup-wrapper">
-      <paper-material id="popup" elevation="3">
+    <paper-material id="popup" elevation="3">
+      <div id="popup-scroll">
         <div id="popup-list"></div>
-      </paper-material>
-    </div>
+      </div>
+    </paper-material>
   </template>
 </dom-module>
