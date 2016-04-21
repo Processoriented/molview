@@ -4,22 +4,24 @@
       :host {
         display: block;
         position: relative;
-        height: calc(64px + 48px);
+        height: calc(64px + 42px);
 
         color: var(--molview-white);
         background-color: var(--paper-red-500);
       }
 
       paper-tabs {
+        height: 42px;
         color: var(--molview-white);
         background-color: var(--paper-red-500);
         --paper-tabs-selection-bar-color: var(--molview-white);
       }
 
       paper-tab {
-        color: var(--paper-red-a100);
+        color: var(--paper-red-100);
         transition: color .1s;
-        font-family: 'Roboto Mono', monospace;
+        text-transform: uppercase;
+        font-size: 10pt;
 
         /* Fix small width changes when the tab is selected */
         font-weight: bold;
@@ -93,9 +95,8 @@
       <paper-tab>Molecular structure</paper-tab>
       <paper-tab>Spectroscopy</paper-tab>
       <paper-tab>Empirical data</paper-tab>
-      <paper-tab>Jmol</paper-tab>
       <paper-tab>DNA sequence</paper-tab>
-      <paper-tab>Protein structure</paper-tab>
+      <paper-tab>Script editor</paper-tab>
       <paper-tab>More modules</paper-tab>
     </paper-tabs>
   </template>

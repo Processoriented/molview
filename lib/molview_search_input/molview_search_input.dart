@@ -87,8 +87,6 @@ class MolViewSearchInput extends PolymerElement {
 
   /// Change popup selected item index.
   void setSelectedItem(int idx) {
-    print(idx);
-
     // Unselect currently selected item.
     if (_selectedItem != -1) {
       $['popup-list'].childNodes[_selectedItem].attributes.remove('selected');
