@@ -48,11 +48,13 @@ class MolViewSearchInput extends PolymerElement {
     $['input'].onKeyDown.listen((KeyboardEvent e) {
       switch (e.keyCode) {
         case KeyCode.UP:
+          e.preventDefault(); // Prevent input navigation
           setSelectedItem(_selectedItem == 0
               ? $['popup-list'].childNodes.length - 1
               : _selectedItem - 1);
           break;
         case KeyCode.DOWN:
+          e.preventDefault(); // Prevent input navigation
           setSelectedItem(_selectedItem + 1 == $['popup-list'].childNodes.length
               ? 0
               : _selectedItem + 1);
