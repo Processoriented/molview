@@ -9,6 +9,7 @@ import 'dart:html';
 import 'dart:async';
 
 import 'package:omnibus/omnibus.dart';
+import 'package:molview_pubchem/molview_pubchem.dart';
 import 'package:molview_messages/molview_messages_v0.dart' as v0;
 
 // ignore: UNUSED_IMPORT
@@ -73,8 +74,9 @@ class MolViewWeb extends PolymerElement {
           var value = _input.value;
           if (value.length > autocompleteThreshold) {
             // Get suggestions using a FindSearchSuggestions request.
-            var responses = await _bus
-                .publishRequest(new v0.FindSearchSuggestions(value, 5));
+            var responses = await _bus.publishRequest(
+                new v0.FindSearchSuggestions(
+                    value, [pubchemAutocpProvider], 5));
             var stream = v0.streamSearchSuggestions(responses);
 
             // Add all suggestions to the suggesions list.
