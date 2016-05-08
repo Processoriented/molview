@@ -6,14 +6,14 @@ homepage:     http://molview.org
 environment:
   sdk:        '>=1.8.0 <2.0.0'
 dependencies:
-  http:              ^0.11.3+3
+  http:              ^0.11.3+5
   browser:           ^0.10.0+2
   polymer:           ^1.0.0-rc.16
   polymer_elements:  ^1.0.0-rc.8
   web_components:    ^0.12.3
-  omnibus:           ^0.14.0
-  molview_pubchem:   ^0.1.1+1
-  molview_messages:  ^0.5.1+1
+  omnibus:           ^0.15.2
+  molview_pubchem:   ^0.1.2
+  molview_messages:  ^0.6.0
   dart_to_js_script_rewriter:  ^1.0.1
 transformers:
 - polymer:

@@ -86,7 +86,7 @@
       #input {
         z-index: 0;
         height: 100%;
-        padding: 0 var(--input-padding) 0 60px;
+        padding: 0 0 0 60px;
         flex: 1;
 
         border: none;
@@ -100,7 +100,7 @@
       }
 
       :host[mini-toolbar] #input {
-        padding: 0 var(--input-padding) 0 0;
+        padding: 0 0 0 0;
       }
 
       #input:focus {
@@ -171,6 +171,33 @@
         padding: 10px 0;
         color: var(--molview-black);
       }
+
+      /* Menu */
+      paper-menu-button {
+        padding: 0;
+      }
+
+      paper-menu {
+        --paper-menu-color: var(--paper-grey-800);
+      }
+
+      #more-vert-btn {
+        padding: 7px;
+        width: 38px;
+        height: 38px;
+      }
+
+      paper-icon-item {
+        --paper-item-focused-before: {
+          display: none;
+        }
+      }
+
+      /* FIX wrong positional of the dropdown in Google Chrome, see:
+      https://github.com/PolymerElements/paper-menu-button/issues/29 */
+      paper-material {
+        -webkit-transform: none !important;
+      }
     </style>
 
     <paper-material id="bar" elevation="1">
@@ -188,9 +215,31 @@
           icon="search"></iron-icon>
       <input
           id="input"
+          size="1"
           placeholder="Type to search..."
           autocomplete="off"
           spellcheck="false"></input>
+      <paper-menu-button id="menu" horizontal-align="right">
+        <paper-icon-button
+            id="more-vert-btn"
+            icon="more-vert"
+            class="dropdown-trigger">
+        </paper-icon-button>
+        <paper-menu id="menu-items" class="dropdown-content">
+          <paper-icon-item>
+            <iron-icon icon="settings" item-icon></iron-icon>
+            Settings
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="dns" item-icon></iron-icon>
+            Databases
+          </paper-icon-item>
+          <paper-icon-item>
+            <iron-icon icon="archive" item-icon></iron-icon>
+            Archive
+          </paper-icon-item>
+        </paper-menu>
+      </paper-menu-button>
     </paper-material>
     <paper-material id="popup" elevation="3">
       <div id="popup-scroll">

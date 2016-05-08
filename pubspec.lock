@@ -18,7 +18,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.9.0"
+    version: "1.10.0"
   barback:
     description:
       name: barback
@@ -102,7 +102,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.3+3"
+    version: "0.11.3+5"
   http_parser:
     description:
       name: http_parser
@@ -126,19 +126,19 @@ packages:
       name: molview_messages
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.1+1"
+    version: "0.6.0"
   molview_pubchem:
     description:
       name: molview_pubchem
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1+1"
+    version: "0.1.2"
   omnibus:
     description:
       name: omnibus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.0"
+    version: "0.15.2"
   package_config:
     description:
       name: package_config

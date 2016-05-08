@@ -3,10 +3,10 @@
 // that can be found in the LICENSE file.
 
 import 'package:omnibus/omnibus.dart';
-import 'package:http/browser_client.dart';
+import 'package:http/browser_client.dart' as http;
 import 'package:molview_pubchem/module.dart' as module_pubchem;
 
 void loadModules(Omnibus bus) {
-  var httpClient = new BrowserClient();
+  var httpClient = new http.BrowserClient();
   module_pubchem.main(bus, httpClient);
 }

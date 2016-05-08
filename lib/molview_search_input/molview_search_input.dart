@@ -21,9 +21,17 @@ import 'package:polymer_elements/iron_icon.dart';
 // ignore: UNUSED_IMPORT
 import 'package:polymer_elements/iron_icons.dart';
 // ignore: UNUSED_IMPORT
+import 'package:polymer_elements/paper_ripple.dart';
+// ignore: UNUSED_IMPORT
 import 'package:polymer_elements/paper_material.dart';
 // ignore: UNUSED_IMPORT
 import 'package:polymer_elements/paper_icon_button.dart';
+// ignore: UNUSED_IMPORT
+import 'package:polymer_elements/paper_icon_item.dart';
+// ignore: UNUSED_IMPORT
+import 'package:polymer_elements/paper_menu.dart';
+// ignore: UNUSED_IMPORT
+import 'package:polymer_elements/paper_menu_button.dart';
 // ignore: UNUSED_IMPORT
 import 'package:molview_web/molview_search_input/search_popup_item.dart';
 
@@ -168,5 +176,11 @@ class MolViewSearchInput extends PolymerElement {
   @Listen('drawer-toggle.tap')
   void onDrawerToggleTap(Event event, Map detail) {
     fire('drawer-toggle');
+  }
+
+  /// Reset menu selected status after the menu closes
+  @Listen('menu.paper-dropdown-open')
+  void onMenuClose(Event event, Map details) {
+    $['menu-items'].selected = -1;
   }
 }
