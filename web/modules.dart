@@ -5,8 +5,10 @@
 import 'package:omnibus/omnibus.dart';
 import 'package:http/browser_client.dart' as http;
 import 'package:molview_pubchem/module.dart' as module_pubchem;
+import 'package:molview_wikidata/module.dart' as module_wikidata;
 
 void loadModules(Omnibus bus) {
   var httpClient = new http.BrowserClient();
   module_pubchem.main(bus, httpClient);
+  module_wikidata.main(bus, httpClient);
 }

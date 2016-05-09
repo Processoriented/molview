@@ -9,7 +9,8 @@ import 'dart:html';
 import 'dart:async';
 
 import 'package:omnibus/omnibus.dart';
-import 'package:molview_pubchem/molview_pubchem.dart';
+//import 'package:molview_pubchem/molview_pubchem.dart';
+import 'package:molview_wikidata/molview_wikidata.dart';
 import 'package:molview_messages/molview_messages_v0.dart' as v0;
 
 // ignore: UNUSED_IMPORT
@@ -76,7 +77,7 @@ class MolViewWeb extends PolymerElement {
             // Get suggestions using a FindSearchSuggestions request.
             var responses = await _bus.publishRequest(
                 new v0.FindSearchSuggestions(
-                    value, [pubchemAutocpProvider], 5));
+                    value, 'en', [wikidataAutocpProvider], 5));
             var stream = v0.streamSearchSuggestions(responses);
 
             // Add all suggestions to the suggesions list.
@@ -109,7 +110,13 @@ class MolViewWeb extends PolymerElement {
   /// Toggle drawer when the custom 'drawer-toggle' event is triggered.
   @Listen('toolbar.drawer-toggle')
   void onDrawerToggleTap(Event event, Map detail) {
-    var drawer = $['drawer-menu'] as PaperDrawerPanel;
-    drawer.togglePanel();
+    $['drawer-panel'].togglePanel();
+    $['drawer-menu'].selected = -1;
+  }
+
+  /// An item in the drawer menu is selected.
+  @Listen('drawer-menu.iron-select')
+  void onDrawerSelect(Event event, Map detail) {
+    $['drawer-panel'].closeDrawer();
   }
 }

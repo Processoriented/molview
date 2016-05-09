@@ -126,13 +126,19 @@ packages:
       name: molview_messages
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.1"
+    version: "0.8.1"
   molview_pubchem:
     description:
       name: molview_pubchem
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.3"
+    version: "0.2.0"
+  molview_wikidata:
+    description:
+      name: molview_wikidata
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   omnibus:
     description:
       name: omnibus
