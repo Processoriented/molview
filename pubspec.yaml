@@ -12,9 +12,9 @@ dependencies:
   polymer_elements:  ^1.0.0-rc.8
   web_components:    ^0.12.3
   omnibus:           ^0.15.2
-  molview_pubchem:   ^0.2.0
-  molview_wikidata:  ^0.0.2
-  molview_messages:  ^0.8.1
+  molview_pubchem:   ^0.2.0+2
+  molview_wikidata:  ^0.0.2+1
+  molview_messages:  ^0.10.0
   dart_to_js_script_rewriter:  ^1.0.1
 transformers:
 - polymer:
